@@ -23,6 +23,9 @@
         ul {
             list-style: none;
         }
+        li {
+            padding: 4px 4px;
+        }
         a {
             color: white;
         }
@@ -34,7 +37,7 @@
     <div class="content">
         <div v-if="listView">
             <ul>
-                <li v-for="person in participants">
+                <li v-for="person in people">
                     <a :href="'/jul?n=' + [[ person.name ]]">[[ person.name ]]</a>
                 </li>
             </ul>
@@ -58,19 +61,25 @@
         delimiters: ["[[", "]]"],
         data() {
             const params = new URLSearchParams(window.location.search)
-            const hasName = !params.has('n')
-            const name = params.get('n')
+            const hasName = params.has('n')
+            const name = hasName ? params.get('n') : ""
             const data = [
-                {name: 'one', wishes: ['two', 'three','two', 'three','two', 'three','two', 'three','two', 'three','two', 'three']},
-                {name: 'two', wishes: ['two', 'three']},
-                {name: 'three', wishes: ['two', 'three']},
-                {name: 'four', wishes: ['two', 'three']},
+                {name: 'Kalle', wishes: ['two', 'three']},
+                {name: 'Aika', wishes: ['two', 'three']},
+                {name: 'Anna', wishes: ['two', 'three']},
+                {name: 'Eivor', wishes: ['two', 'three']},
+                {name: 'Erik', wishes: ['two', 'three']},
+                {name: 'Stina', wishes: ['two', 'three']},
+                {name: 'Maria', wishes: ['two', 'three']},
+                {name: 'Janne', wishes: ['two', 'three']},
+                {name: 'Kajsa', wishes: ['two', 'three']},
+                {name: 'Jonas', wishes: ['two', 'three']},
             ]
             return {
-                listView: hasName,
+                listView: !hasName,
                 name: name,
-                participants: data,
-                selected: data.filter(x => x.name === 'one')[0]
+                people: data,
+                selected: data.filter(x => x.name.toLowerCase() === name.toLowerCase())[0]
             }
         }
     }).mount('#app')
