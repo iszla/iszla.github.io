@@ -1,2 +1,79 @@
-<!doctype html><html lang=en><head><meta charset=utf-8><meta http-equiv=x-ua-compatible content="IE=edge"><meta name=viewport content="width=device-width,initial-scale=1"><title>Hemlig tomte</title><script src=https://unpkg.com/vue@3/dist/vue.global.js></script>
-<link rel=stylesheet href=http://example.org/css/snow.css><style>#app,.content{width:100%;height:100%;color:#fff}.content{display:flex;justify-content:center;align-items:center}ul{list-style:none}a{color:#fff}</style></head><body><div id=app><div class=snow v-for="i in 50"></div><div class=content><div v-if=listView><ul><li v-for="person in participants"><a :href="'/jul?n=' + [[ person.name ]]">[[ person.name ]]</a></li></ul></div><div v-if=!listView><h1>[[ selected.name ]]</h1><ul><li v-for="wish in selected.wishes">[[ wish ]]</li></ul></div></div></div><script>const{createApp}=Vue;createApp({delimiters:["[[","]]"],data(){const e=new URLSearchParams(window.location.search),n=!e.has("n"),s=e.get("n"),t=[{name:"one",wishes:["two","three"]},{name:"two",wishes:["two","three"]},{name:"three",wishes:["two","three"]},{name:"four",wishes:["two","three"]}];return{listView:n,name:s,participants:t,selected:t.filter(e=>e.name==="one")[0]}}}).mount("#app")</script></body></html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hemlig tomte</title>
+
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <link rel="stylesheet" href="/css/snow.css">
+    <style>
+        #app, .content {
+            width: 100%;
+            height: 100%;
+            color: white;
+        }
+
+        .content {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        ul {
+            list-style: none;
+        }
+        a {
+            color: white;
+        }
+    </style>
+</head>
+<body>
+<div id="app">
+    <div class="snow" v-for="i in 50"></div>
+    <div class="content">
+        <div v-if="listView">
+            <ul>
+                <li v-for="person in participants">
+                    <a :href="'/jul?n=' + [[ person.name ]]">[[ person.name ]]</a>
+                </li>
+            </ul>
+        </div>
+        <div v-if="!listView">
+            <h1>[[ selected.name ]]</h1>
+            <ul>
+                <li v-for="wish in selected.wishes">
+                    [[ wish ]]
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<script>
+    const {createApp} = Vue
+
+    createApp({
+        delimiters: ["[[", "]]"],
+        data() {
+            const params = new URLSearchParams(window.location.search)
+            const hasName = !params.has('n')
+            const name = params.get('n')
+            const data = [
+                {name: 'one', wishes: ['two', 'three']},
+                {name: 'two', wishes: ['two', 'three']},
+                {name: 'three', wishes: ['two', 'three']},
+                {name: 'four', wishes: ['two', 'three']},
+            ]
+            return {
+                listView: hasName,
+                name: name,
+                participants: data,
+                selected: data.filter(x => x.name === 'one')[0]
+            }
+        }
+    }).mount('#app')
+</script>
+</body>
+</html>
