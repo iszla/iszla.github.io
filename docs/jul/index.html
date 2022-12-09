@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -9,80 +10,84 @@
     <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
     <link rel="stylesheet" href="/css/snow.css">
     <style>
-        #app, .content {
+        #app,
+        .content {
             width: 100%;
             height: 100%;
             color: white;
         }
+
         .content {
             display: flex;
             justify-content: space-around;
             align-items: center;
             flex-direction: column;
         }
+
         ul {
             list-style: none;
         }
+
         li {
             padding: 4px 4px;
         }
+
         a {
             color: white;
         }
     </style>
 </head>
+
 <body>
-<div id="app">
-    <div class="snow" v-for="i in 50"></div>
-    <div class="content">
-        <div v-if="listView">
-            <ul>
-                <li v-for="person in people">
-                    <a :href="'/jul?n=' + [[ person.name ]]">[[ person.name ]]</a>
-                </li>
-            </ul>
+    <div id="app">
+        <div class="snow" v-for="i in 50"></div>
+        <div class="content">
+            <div v-if="listView">
+                <ul>
+                    <li v-for="person in people">
+                        <a :href="'/jul?n=' + [[ person.name ]]">[[ person.name ]]</a>
+                    </li>
+                </ul>
+            </div>
+            <div v-if="!listView">
+                <h1>[[ selected.name ]]</h1>
+                <ul>
+                    <li v-for="wish in selected.wishes">
+                        [[ wish ]]
+                    </li>
+                </ul>
+            </div>
+            <div></div>
         </div>
-        <div v-if="!listView">
-            <h1>[[ selected.name ]]</h1>
-            <ul>
-                <li v-for="wish in selected.wishes">
-                    [[ wish ]]
-                </li>
-            </ul>
-        </div>
-        <div></div>
     </div>
-</div>
 
-<script>
-    const {createApp} = Vue
+    <script>
+        const { createApp } = Vue
 
-    createApp({
-        delimiters: ["[[", "]]"],
-        data() {
-            const params = new URLSearchParams(window.location.search)
-            const hasName = params.has('n')
-            const name = hasName ? params.get('n') : ""
-            const data = [
-                {name: 'Kalle', wishes: ['two', 'three']},
-                {name: 'Aika', wishes: ['two', 'three']},
-                {name: 'Anna', wishes: ['two', 'three']},
-                {name: 'Eivor', wishes: ['two', 'three']},
-                {name: 'Erik', wishes: ['two', 'three']},
-                {name: 'Stina', wishes: ['two', 'three']},
-                {name: 'Maria', wishes: ['two', 'three']},
-                {name: 'Janne', wishes: ['two', 'three']},
-                {name: 'Kajsa', wishes: ['two', 'three']},
-                {name: 'Jonas', wishes: ['two', 'three']},
-            ]
-            return {
-                listView: !hasName,
-                name: name,
-                people: data,
-                selected: data.filter(x => x.name.toLowerCase() === name.toLowerCase())[0]
+        createApp({
+            delimiters: ["[[", "]]"],
+            data() {
+                const params = new URLSearchParams(window.location.search)
+                const hasName = params.has('n')
+                const name = hasName ? params.get('n') : ""
+                const data = [
+                    { name: 'Kalle', wishes: ['Presentkort Webhallen', 'Arduino Robotbil Startpaket (finns på Kjell & Co)'] },
+                    { name: 'Aika', wishes: ['Parfym DKNY Be Delicious Vit', 'Presentkort IKEA'] },
+                    { name: 'Anna', wishes: ['Presentkort Rusta', 'Presentkort Adlibris'] },
+                    { name: 'Erik', wishes: ['Presentkort (digitalt) Akademibokhandeln', 'Presentkort Plantagen', 'Glögg', 'Deckare', 'Andra böcker', 'Skinnhandskar', 'Lysdioder man fäster på armar/ben för att synas i trafiken', 'Pussel berg/slott/natur/vinter motiv'] },
+                    { name: 'Stina', wishes: ['Presentkort BodyShop', 'Presentkort LidaPin (piercingställe)', 'Kläder', 'Presentkort Fullerö'] },
+                    { name: 'Maria', wishes: ['Presentkort Jysk', 'Topp/Tröja', 'Termoskanna', 'Presentkort IKEA', 'Julporslinsfigur av Rolf Berg (finns på Cervera)'] },
+                    { name: 'Janne', wishes: ['Presentkort Jysk', 'Presentkort IKEA'] },
+                ]
+                return {
+                    listView: !hasName,
+                    name: name,
+                    people: data,
+                    selected: data.filter(x => x.name.toLowerCase() === name.toLowerCase())[0]
+                }
             }
-        }
-    }).mount('#app')
-</script>
+        }).mount('#app')
+    </script>
 </body>
+
 </html>
